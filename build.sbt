@@ -9,6 +9,7 @@ lazy val root = (project in file("."))
     assembly / assemblyJarName := "q01.jar"
   )
 
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.9"
 libraryDependencies += "com.github.scopt" %% "scopt" % "4.0.1"
 
 //artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) => "q01.jar"}

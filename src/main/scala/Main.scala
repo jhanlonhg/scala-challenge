@@ -7,7 +7,7 @@ object Main extends App {
   @tailrec
   def recursiveSum(valuesToSum: Seq[Int], sum: Int = 0): Int = {
     valuesToSum match {
-      case Seq() => sum
+      case Nil => sum
       case _ => recursiveSum(valuesToSum.tail, sum + valuesToSum.head)
     }
   }

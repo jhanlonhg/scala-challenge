@@ -14,7 +14,8 @@ object Main extends App {
   }
 
   def run(arguments: Arguments): Unit = {
-    println("Sum: " + recursiveSum(valuesToSum = arguments.addends))
+    val sum = recursiveSum(valuesToSum = arguments.addends)
+    println(s"Sum: ${sum}")
   }
 
   parser.parse(args, Arguments()) match {

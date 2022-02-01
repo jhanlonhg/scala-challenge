@@ -1,20 +1,25 @@
 package org.hanlonjohn23
 import ArgParser.{Arguments, parser}
 
-import scala.annotation.tailrec
+object Defaults {
+  val GEO_URL = "https://foo.bar"
+}
 
 object Main extends App {
-  @tailrec
-  def recursiveSum(sum: Int = 0, valuesToSum: Seq[Int]): Int = {
-    if(valuesToSum.isEmpty) {
-      sum
-    } else {
-      recursiveSum(sum + valuesToSum.head, valuesToSum.tail)
-    }
-  }
 
   def run(arguments: Arguments): Unit = {
-    println("Sum: " + recursiveSum(valuesToSum = arguments.addends))
+    val cities: Seq[String] = cityParser(arguments)
+
+    val geoQuery: Json = buildQuery(cities)
+
+    val response: Seq[Json] = sentRequests(geoQuery, Defaults.GEO_URL)
+
+    val citiesLatLong: Seq[CityLatLong] = getCityLatLongs(response)
+
+    val closestCities: (String, String) = getClosestCities(citiesLatLong)
+
+    print()
+
   }
 
   parser.parse(args, Arguments()) match {

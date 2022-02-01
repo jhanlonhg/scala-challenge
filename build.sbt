@@ -6,9 +6,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "scala-challenge",
     idePackagePrefix := Some("org.hanlonjohn23"),
-    assembly / assemblyJarName := "q01.jar"
+    assembly / assemblyJarName := "q02.jar"
   )
 
 libraryDependencies += "com.github.scopt" %% "scopt" % "4.0.1"
-
-//artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) => "q01.jar"}

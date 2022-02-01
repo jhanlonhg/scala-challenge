@@ -6,10 +6,9 @@ import scala.annotation.tailrec
 object Main extends App {
   @tailrec
   def recursiveSum(valuesToSum: Seq[Int], sum: Int = 0): Int = {
-    if(valuesToSum.isEmpty) {
-      sum
-    } else {
-      recursiveSum(valuesToSum.tail, sum + valuesToSum.head)
+    valuesToSum match {
+      case Seq() => sum
+      case _ => recursiveSum(valuesToSum.tail, sum + valuesToSum.head)
     }
   }
 

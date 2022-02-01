@@ -5,11 +5,11 @@ import scala.annotation.tailrec
 
 object Main extends App {
   @tailrec
-  def recursiveSum(sum: Int = 0, valuesToSum: Seq[Int]): Int = {
+  def recursiveSum(valuesToSum: Seq[Int], sum: Int = 0): Int = {
     if(valuesToSum.isEmpty) {
       sum
     } else {
-      recursiveSum(sum + valuesToSum.head, valuesToSum.tail)
+      recursiveSum(valuesToSum.tail, sum + valuesToSum.head)
     }
   }
 

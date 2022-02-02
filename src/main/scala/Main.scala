@@ -6,7 +6,6 @@ object Defaults {
 }
 
 object Main extends App {
-
   def run(arguments: Arguments): Unit = {
     val cities: Seq[String] = cityParser(arguments)
 
@@ -19,7 +18,6 @@ object Main extends App {
     val closestCities: (String, String) = getClosestCities(citiesLatLong)
 
     print()
-
   }
 
   parser.parse(args, Arguments()) match {

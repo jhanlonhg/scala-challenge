@@ -1,12 +1,13 @@
 package org.hanlonjohn23
 
 object ArgParser {
-  case class Arguments(addends: Seq[Int] = List.empty)
+  case class Arguments(cities: String = "")
 
-  val parser = new scopt.OptionParser[Arguments]("java -jar q01-add.jar") {
-    opt[Seq[Int]]('a', "addends")
+  val parser = new scopt.OptionParser[Arguments]("java -jar q02.jar") {
+    opt[String]('c', "cities")
       .required()
-      .valueName("Comma-separated list of numbers to be added")
-      .action((value, arguments) => arguments.copy(addends = value))
+      .valueName("Quote-wrapped, pipe-separated list of city and states")
+      .text("e.g., \"Los Angeles, CA |  Chicago, IL | New York City, NY\"")
+      .action((value, arguments) => arguments.copy(cities = value))
   }
 }

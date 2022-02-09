@@ -11,3 +11,4 @@ lazy val root = (project in file("."))
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.9"
 libraryDependencies += "com.github.scopt" %% "scopt" % "4.0.1"
+libraryDependencies +=  "org.scalaj" %% "scalaj-http" % "2.4.2"

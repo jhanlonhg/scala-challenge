@@ -1,41 +1,29 @@
 package org.hanlonjohn23
-import ArgParser.{Arguments, parser}
+
+import ArgParser._
 import GeoResponseToLocationConverter._
-
-import scala.math.{pow, sqrt}
-import org.hanlonjohn23.HttpRequester.GeocoderResponseBody
-import org.hanlonjohn23.LocationUtils.getClosestCities
-import scalaj.http._
-
-//case class CityLatLong
-
+import HttpRequester.GeocoderResponseBody
+import LeastDistanceCalculator.getClosestCities
 
 object Main extends App {
-  case class Distance(
-                       location1: Location,
-                       location2: Location,
-                       length: Double
-                     )
-
-  def cityParser(cities: String): Seq[String] = {
-    // Split String on pipe character `|`
-    cities.split("\\|").map(_.trim)
-  }
-
-  def sendRequests(geoQuery: String) {
-    Http(Defaults.GEOCODER_URL).param("auth",Defaults.GEOCODER_AUTH).param("locate", geoQuery).param("json", "1").asString
-  }
-
   def run(arguments: Arguments): Unit = {
-    val cities: Seq[String] = cityParser(arguments.cities)
+    // Split passed argument on pipe character `|` & trim whitespace
+    val cities: Seq[String] = arguments.cities.split("\\|").map(_.trim)
 
+    // Send Request to Geocoder service for passed args
     val response: Seq[GeocoderResponseBody] = cities.map(HttpRequester.geoCoderGetRequest)
 
-    val citiesLatLong: Seq[Location] = response.map(_.toCityLatLong)
+    // Extract relevant location data from Geocoder response
+    val locations: Seq[Location] = response.map(_.toLocation)
 
-    val closestCities: Distance = getClosestCities(citiesLatLong)
+    // Calculate which two cities are geographically closest
+    val closestCities: Distance = getClosestCities(locations)
 
-    print(s"${closestCities.location1.city} and ${closestCities.location2.city} are closest")
+    val location1 = closestCities.location1
+    val location2 = closestCities.location2
+
+    // Report results to user
+    print(s"${location1.city}, ${location1.state} & ${location2.city}, ${location2.state} are closest")
   }
 
   parser.parse(args, Arguments()) match {

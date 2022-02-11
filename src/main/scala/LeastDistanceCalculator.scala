@@ -2,6 +2,7 @@ package org.hanlonjohn23
 
 import scala.annotation.tailrec
 import scala.math.{pow, sqrt}
+import Haversine._
 
 case class Distance(
                      location1: Location,
@@ -32,6 +33,19 @@ object LeastDistanceCalculator {
   }
 
   private def generateDistance(locationPair: (Location, Location)): Distance = {
+    val (location1, location2) = locationPair
+
+    // Calculate Haversine distance
+    val distanceBetween: Double = calculateHaversine(location1, location2)
+
+    Distance(
+      location1 = location1,
+      location2 = location2,
+      length = distanceBetween
+    )
+  }
+
+  private def generatePythagoreanDistance(locationPair: (Location, Location)): Distance = {
     val (location1, location2) = locationPair
 
     // Calculate Pythagorean distance

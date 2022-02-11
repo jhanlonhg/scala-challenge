@@ -11,10 +11,9 @@ object Main extends App {
     val locations: Seq[Location] = cities.map(HttpRequester.geoCoderGetRequest)
 
     // Calculate which two cities are geographically closest
-    val closestCities: Distance = getClosestCities(locations)
+    val closestCities: (Location, Location) = getClosestCities(locations)
 
-    val location1 = closestCities.location1
-    val location2 = closestCities.location2
+    val (location1, location2) = closestCities
 
     // Report results to user
     print(s"${location1.city}, ${location1.state} & ${location2.city}, ${location2.state} are closest\n")

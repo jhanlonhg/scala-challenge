@@ -4,11 +4,15 @@ import scala.annotation.tailrec
 import scala.math.{pow, sqrt}
 import Haversine._
 
-case class Distance(
+private case class Distance(
                      location1: Location,
                      location2: Location,
                      length: Double
-                   )
+                   ) {
+  def toLocationTuple: (Location, Location) = {
+    (location1, location2)
+  }
+}
 
 object LeastDistanceCalculator {
   @tailrec
@@ -23,13 +27,14 @@ object LeastDistanceCalculator {
     }
   }
 
-  def getClosestCities(locations: Seq[Location]): Distance = {
+  def getClosestCities(locations: Seq[Location]): (Location, Location) = {
     // Generate unique pairs of all locations
     generateDistinctPairs(locations)
       // Generate Distance objects using Location pairs
       .map(generateDistance)
       // Get Distance with smallest length
       .reduce((x,y) => getMinDistance(x, y))
+      .toLocationTuple
   }
 
   private def generateDistance(locationPair: (Location, Location)): Distance = {
@@ -59,12 +64,10 @@ object LeastDistanceCalculator {
   }
 
   private def getMinDistance(distance1: Distance, distance2: Distance): Distance = {
-    // TODO: I am sure there is a pattern that can resolve this issue in a cleaner fashion
-    val minDistanceDouble = distance1.length min distance2.length
-
-    minDistanceDouble match {
-      case distance1.length => distance1
-      case distance2.length => distance2
+    if (distance1.length < distance2.length) {
+      distance1
+    } else {
+      distance2
     }
   }
 }

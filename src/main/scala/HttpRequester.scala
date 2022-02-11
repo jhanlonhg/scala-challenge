@@ -1,45 +1,38 @@
 package org.hanlonjohn23
-import scalaj.http._
+
+import io.circe.Decoder.Result
 import io.circe._
 import io.circe.parser._
-import io.circe.generic.semiauto._
+import scalaj.http._
 
 object Defaults {
   val GEOCODER_URL = "https://geocoder.ca"
   val GEOCODER_AUTH: String = sys.env("GEOCODER_AUTH")
-
 }
 
 object HttpRequester {
-  case class StandardObject(
-                             staddress: JsonObject,
-                             stnumber: JsonObject,
-                             prov: String,
-                             city: String,
-                             postal: JsonObject,
-                             confidence: String
-                           )
+  implicit val locationDecoder: Decoder[Location] = new Decoder[Location] {
+    final def apply(c: HCursor): Result[Location] = {
+      for {
+        city <- c.downField("standard").downField("city").as[String]
+        state <- c.downField("standard").downField("prov").as[String]
+        latitude <- c.downField("latt").as[Double]
+        longitude <- c.downField("longt").as[Double]
+      } yield {
+        Location(city, state, latitude, longitude)
+      }
+    }
+  }
 
-  case class GeocoderResponseBody(
-                                   standard: StandardObject,
-                                   longt: String,
-                                   latt: String,
-                                   remaining_credits: String
-                                 )
-
-
-  def geoCoderGetRequest(city: String): GeocoderResponseBody = {
+  def geoCoderGetRequest(city: String): Location = {
     val response = Http(Defaults.GEOCODER_URL)
       .param("auth", Defaults.GEOCODER_AUTH)
       .param("locate", city)
-      .param("json", "1")   // Request JSON response
+      .param("json", "1") // Request JSON response
       .asString
 
-    implicit val standardDecoder: Decoder[StandardObject] = deriveDecoder[StandardObject]
-    implicit val gcResponseDecoder: Decoder[GeocoderResponseBody] = deriveDecoder[GeocoderResponseBody]
-
-    decode[GeocoderResponseBody](response.body) match {
-      case Left(error) => println(response); throw error   // TODO: Handle this failure case more gracefully
+    decode[Location](response.body) match {
+      case Left(error) => println(response); throw error // TODO: Handle this failure case more gracefully
       case Right(response) => response
     }
   }

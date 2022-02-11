@@ -1,21 +1,32 @@
 package org.hanlonjohn23
 
-import HttpRequester.{GeocoderResponseBody, StandardObject}
-import io.circe.JsonObject
+import io.circe.parser.decode
+import io.circe.Decoder
 import org.scalatest.funsuite.AnyFunSuite
-import GeoResponseToLocationConverter.GeocoderResponseToLocation
 
 class LocationTest extends AnyFunSuite {
-  test("A GeocoderResponseBody object can be converted into a Location object") {
-    val geocoderResponseBody = GeocoderResponseBody(
-      StandardObject(staddress = JsonObject(), stnumber = JsonObject(), prov = "CA", city = "Los Angeles", postal = JsonObject(), confidence = "0.8"),
-      longt = "-118.303441",
-      latt = "34.040462",
-      remaining_credits = "-23"
-    )
+  test("A response from Geocoder can be converted into a Location object") {
+    implicit val locationDecoder: Decoder[Location] = HttpRequester.locationDecoder
+
+    val geocoderResponseBody =
+      """
+        |{
+        |	"standard": {
+        |		"staddress": {},
+        |		"stnumber": {},
+        |		"prov": "CA",
+        |		"city": "Los Angeles",
+        |		"postal": {},
+        |		"confidence": "0.8"
+        |	},
+        |	"longt": "-118.303441",
+        |	"latt": "34.040462"
+        |}
+        |""".stripMargin
+
     val location = Location(
       city = "Los Angeles", state = "CA", latitude = 34.040462, longitude = -118.303441
     )
-    assert(geocoderResponseBody.toLocation == location)
+    assert(decode[Location](geocoderResponseBody).right.getOrElse() == location)
   }
 }

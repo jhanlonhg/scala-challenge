@@ -33,8 +33,7 @@ object LeastDistanceCalculator {
   }
 
   private def generateDistance(locationPair: (Location, Location)): Distance = {
-    val location1 = locationPair._1
-    val location2 = locationPair._2
+    val (location1, location2) = locationPair
 
     // Calculate Pythagorean distance
     val distanceBetween: Double = sqrt(pow(location1.longitude - location2.longitude, 2) + pow(location1.latitude - location2.latitude, 2))

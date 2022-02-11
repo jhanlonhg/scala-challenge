@@ -12,14 +12,13 @@ case class Distance(
 object LeastDistanceCalculator {
   @tailrec
   def generateDistinctPairs[A](list: Seq[A], results: Seq[(A, A)] = Nil): Seq[(A, A)] = {
-    def generatePairs(list: Seq[A]): Seq[(A, A)] = {
-      val head +: tail = list
+    def generatePairsWithHead(head: A, tail: Seq[A]): Seq[(A, A)] = {
       tail.map((head, _))
     }
 
     list match {
       case Nil => results
-      case _ => generateDistinctPairs(list.tail, results ++: generatePairs(list))
+      case _ => generateDistinctPairs(list.tail, results ++: generatePairsWithHead(list.head, list.tail))
     }
   }
 

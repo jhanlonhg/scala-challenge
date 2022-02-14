@@ -27,6 +27,6 @@ class LocationTest extends AnyFunSuite {
     val location = Location(
       city = "Los Angeles", state = "CA", latitude = 34.040462, longitude = -118.303441
     )
-    assert(decode[Location](geocoderResponseBody).right.getOrElse() == location)
+    assert(decode[Location](geocoderResponseBody) == Right(location))
   }
 }

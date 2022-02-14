@@ -23,7 +23,7 @@ object LeastDistanceCalculator {
 
     list match {
       case Nil => results
-      case _ => generateDistinctPairs(list.tail, results ++: generatePairsWithHead(list.head, list.tail))
+      case head +: tail => generateDistinctPairs(tail, results ++: generatePairsWithHead(head, tail))
     }
   }
 

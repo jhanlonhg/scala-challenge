@@ -1,20 +1,22 @@
 package org.hanlonjohn23
-import ArgParser.{Arguments, parser}
 
-import scala.annotation.tailrec
+import ArgParser._
+import LeastDistanceCalculator.getClosestCities
 
 object Main extends App {
-  @tailrec
-  def recursiveSum(valuesToSum: Seq[Int], sum: Int = 0): Int = {
-    valuesToSum match {
-      case Nil => sum
-      case _ => recursiveSum(valuesToSum.tail, sum + valuesToSum.head)
-    }
-  }
-
   def run(arguments: Arguments): Unit = {
-    val sum = recursiveSum(valuesToSum = arguments.addends)
-    println(s"Sum: ${sum}")
+    val cities: Seq[String] = arguments.cities
+
+    // Send Request to Geocoder service for passed args
+    val locations: Seq[Location] = cities.map(HttpRequester.geoCoderGetRequest)
+
+    // Calculate which two cities are geographically closest
+    val closestCities: (Location, Location) = getClosestCities(locations)
+
+    val (location1, location2) = closestCities
+
+    // Report results to user
+    print(s"${location1.city}, ${location1.state} & ${location2.city}, ${location2.state} are closest\n")
   }
 
   parser.parse(args, Arguments()) match {

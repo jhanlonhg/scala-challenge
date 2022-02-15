@@ -2,7 +2,7 @@ ThisBuild / version := "0.1.0-SNAPSHOT"
 
 ThisBuild / scalaVersion := "2.13.8"
 
-lazy val root = (project in file("."))
+lazy val root = (project in file("closest-cities"))
   .settings(
     name := "scala-challenge",
     idePackagePrefix := Some("org.hanlonjohn23"),

@@ -5,11 +5,11 @@ import scala.math.{pow, sqrt}
 import Haversine._
 
 private case class Distance(
-                     location1: Location,
-                     location2: Location,
-                     length: Double
+                             location1: Coordinates,
+                             location2: Coordinates,
+                             length: Double
                    ) {
-  def toLocationTuple: (Location, Location) = {
+  def toLocationTuple: (Coordinates, Coordinates) = {
     (location1, location2)
   }
 }
@@ -27,9 +27,9 @@ object LeastDistanceCalculator {
     }
   }
 
-  def getClosestCities(locations: Seq[Location]): (Location, Location) = {
+  def getClosestBreweries(breweries: Seq[Coordinates]): (Coordinates, Coordinates) = {
     // Generate unique pairs of all locations
-    generateDistinctPairs(locations)
+    generateDistinctPairs(breweries)
       // Generate Distance objects using Location pairs
       .map(generateDistance)
       // Get Distance with smallest length
@@ -37,7 +37,7 @@ object LeastDistanceCalculator {
       .toLocationTuple
   }
 
-  private def generateDistance(locationPair: (Location, Location)): Distance = {
+  private def generateDistance(locationPair: (Coordinates, Coordinates)): Distance = {
     val (location1, location2) = locationPair
 
     // Calculate Haversine distance
@@ -50,7 +50,7 @@ object LeastDistanceCalculator {
     )
   }
 
-  private def generatePythagoreanDistance(locationPair: (Location, Location)): Distance = {
+  private def generatePythagoreanDistance(locationPair: (Coordinates, Coordinates)): Distance = {
     val (location1, location2) = locationPair
 
     // Calculate Pythagorean distance

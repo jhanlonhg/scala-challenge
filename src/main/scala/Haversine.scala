@@ -14,7 +14,7 @@ object Haversine {
     pow(sin(angle/2),2)
   }
 
-  def calculateHaversine(location1: Location, location2: Location): Double = {
+  def calculateHaversine(location1: Coordinates, location2: Coordinates): Double = {
     val latDelta = (location2.latitude - location1.latitude).toRadians
     val longDelta = (location2.longitude - location1.longitude).toRadians
 

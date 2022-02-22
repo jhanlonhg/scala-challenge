@@ -1,7 +1,7 @@
 package org.hanlonjohn23
 
 object AddressDefaults {
-  val SUITE_REGEX = "(Ste|Apt|Unit) [a-zA-Z0-9]{1,4}"
+  val SUITE_REGEX = " (Ste|Apt|Unit) [a-zA-Z0-9]{1,4}"
 }
 
 case class Address(

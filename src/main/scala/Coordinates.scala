@@ -4,9 +4,9 @@ import io.circe.Decoder.Result
 import io.circe.{Decoder, HCursor}
 
 case class Coordinates(
-                     latitude: Double,
-                     longitude: Double
-                   )
+                        latitude: Double,
+                        longitude: Double
+                      )
 
 object CoordinatesHelper {
   val coordinateDecoder: Decoder[Coordinates] = new Decoder[Coordinates] {

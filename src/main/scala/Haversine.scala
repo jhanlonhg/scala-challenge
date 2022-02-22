@@ -1,20 +1,22 @@
 package org.hanlonjohn23
 
-import math._
+import scala.math._
 
 /**
  * Since I am not a big math person, this code is more or less copied from
  * https://titanwolf.org/Network/Articles/Article?AID=ecce95a3-c9d7-438c-bbd8-720d172e238f
  */
-object Haversine {
-  val EARTH_MEAN_RADIUS = 6371  // Kilometers
+object Haversine extends DistanceGenerator {
+  val EARTH_MEAN_RADIUS = 6371 // Kilometers
 
-  private def hav(angle: Double): Double = {
-    // hav(θ) = sin²(θ/2)
-    pow(sin(angle/2),2)
+  override def generateDistance(locationPair: (Coordinates, Coordinates)): Double = {
+    val (location1, location2) = locationPair
+
+    // Calculate Haversine distance
+    calculateHaversine(location1, location2)
   }
 
-  def calculateHaversine(location1: Coordinates, location2: Coordinates): Double = {
+  private def calculateHaversine(location1: Coordinates, location2: Coordinates): Double = {
     val latDelta = (location2.latitude - location1.latitude).toRadians
     val longDelta = (location2.longitude - location1.longitude).toRadians
 
@@ -31,4 +33,8 @@ object Haversine {
     EARTH_MEAN_RADIUS * c
   }
 
+  private def hav(angle: Double): Double = {
+    // hav(θ) = sin²(θ/2)
+    pow(sin(angle / 2), 2)
+  }
 }

@@ -1,22 +1,23 @@
 package org.hanlonjohn23
 
 import ArgParser._
-import LeastDistanceCalculator.getClosestCities
+import BreweryHelper.{UnResolvedBrewery, getClosestBreweries}
 
 object Main extends App {
   def run(arguments: Arguments): Unit = {
-    val cities: Seq[String] = arguments.cities
+    // Get breweries located in city
+    val breweries: Seq[Brewery] = new BrewApi().findBreweriesIn(arguments.city)
 
-    // Send Request to Geocoder service for passed args
-    val locations: Seq[Location] = cities.map(HttpRequester.geoCoderGetRequest)
+    // Get coordinates for breweries without coordinates
+    val resolvedBreweries: Seq[ResolvedBrewery] = breweries.filter(_.isResolvable).map(_.toResolvedBrewery)
 
-    // Calculate which two cities are geographically closest
-    val closestCities: (Location, Location) = getClosestCities(locations)
+    // Calculate which two breweries are geographically closest
+    val closestBreweries: (ResolvedBrewery, ResolvedBrewery) = getClosestBreweries(resolvedBreweries)
 
-    val (location1, location2) = closestCities
+    val (brewery1, brewery2) = closestBreweries
 
     // Report results to user
-    print(s"${location1.city}, ${location1.state} & ${location2.city}, ${location2.state} are closest\n")
+    print(s"${brewery1.name} and ${brewery2.name} are the two closest breweries in ${arguments.city}")
   }
 
   parser.parse(args, Arguments()) match {

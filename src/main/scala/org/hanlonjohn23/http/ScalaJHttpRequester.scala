@@ -1,4 +1,4 @@
-package org.hanlonjohn23
+package org.hanlonjohn23.http
 
 import scalaj.http.Http
 

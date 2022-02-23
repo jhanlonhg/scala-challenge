@@ -1,4 +1,4 @@
-package org.hanlonjohn23
+package org.hanlonjohn23.models
 
 import io.circe.Decoder
 import io.circe.parser.decode

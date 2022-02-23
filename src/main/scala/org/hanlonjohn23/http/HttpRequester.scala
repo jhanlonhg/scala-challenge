@@ -1,4 +1,4 @@
-package org.hanlonjohn23
+package org.hanlonjohn23.http
 
 trait HttpRequester {
   def get(params: Seq[(String, String)]): String

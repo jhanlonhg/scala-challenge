@@ -1,6 +1,9 @@
-package org.hanlonjohn23
+package org.hanlonjohn23.apis
 
 import io.circe.Decoder
+import org.hanlonjohn23.models.{Address, Coordinates, CoordinatesHelper}
+import org.hanlonjohn23.http.ScalaJHttpRequester
+import org.hanlonjohn23.http.{HttpRequester, ScalaJHttpRequester}
 
 object GeoApiDefaults {
   val GEOCODER_URL = "https://geocoder.ca"

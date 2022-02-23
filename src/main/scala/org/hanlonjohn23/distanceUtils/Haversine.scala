@@ -1,4 +1,6 @@
-package org.hanlonjohn23
+package org.hanlonjohn23.distanceUtils
+
+import org.hanlonjohn23.models.Coordinates
 
 import scala.math._
 

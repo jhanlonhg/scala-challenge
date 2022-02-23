@@ -1,7 +1,6 @@
-package org.hanlonjohn23
+package org.hanlonjohn23.cli
 
-import ArgParser.{Arguments, parser}
-
+import org.hanlonjohn23.cli.ArgParser.{Arguments, parser}
 import org.scalatest.funsuite.AnyFunSuite
 
 import java.io.ByteArrayOutputStream

@@ -1,7 +1,9 @@
 package org.hanlonjohn23
 
-import ArgParser._
-import BreweryHelper.{UnResolvedBrewery, getClosestBreweries}
+import org.hanlonjohn23.cli.ArgParser.{Arguments, parser}
+import org.hanlonjohn23.models.BreweryHelper.{UnResolvedBrewery, getClosestBreweries}
+import org.hanlonjohn23.apis.BrewApi
+import org.hanlonjohn23.models.{Brewery, ResolvedBrewery}
 
 object Main extends App {
   def run(arguments: Arguments): Unit = {

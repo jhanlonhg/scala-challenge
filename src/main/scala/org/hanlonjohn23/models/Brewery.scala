@@ -1,9 +1,10 @@
-package org.hanlonjohn23
-
-import LeastDistanceCalculator.{generateDistance, generateDistinctPairs}
+package org.hanlonjohn23.models
 
 import io.circe.Decoder.Result
 import io.circe.{Decoder, HCursor}
+import org.hanlonjohn23.distanceUtils.LeastDistanceCalculator.{generateDistance, generateDistinctPairs}
+import org.hanlonjohn23.apis.GeoApi
+import org.hanlonjohn23.distanceUtils.{DistanceGenerator, Haversine}
 
 case class Brewery(
                     name: String,
@@ -49,13 +50,13 @@ object BreweryHelper {
     } yield {
 
       val coordinates = (maybeLatitude, maybeLongitude) match {
-        case (Some(lat), Some(long))  => Some(Coordinates(lat, long))
-        case _                        => None
+        case (Some(lat), Some(long)) => Some(Coordinates(lat, long))
+        case _ => None
       }
 
       val street = (maybeStreet) match {
         case Some(street) => street
-        case None         => ""
+        case None => ""
       }
 
       Brewery(name, Address(street, city, state), coordinates)

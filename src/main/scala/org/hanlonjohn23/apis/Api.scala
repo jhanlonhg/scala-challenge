@@ -1,7 +1,8 @@
-package org.hanlonjohn23
+package org.hanlonjohn23.apis
 
 import io.circe.Decoder
-import io.circe.parser._
+import io.circe.parser.decode
+import org.hanlonjohn23.http.HttpRequester
 
 trait Api[T] {
   def httpRequester: HttpRequester

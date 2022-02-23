@@ -1,6 +1,9 @@
-package org.hanlonjohn23
+package org.hanlonjohn23.apis
 
 import io.circe.Decoder
+import org.hanlonjohn23._
+import org.hanlonjohn23.http.{HttpRequester, ScalaJHttpRequester}
+import org.hanlonjohn23.models.{Brewery, BreweryHelper, Coordinates, CoordinatesHelper}
 
 object BrewApiDefaults {
   val OPEN_BREWERY_URL = "https://api.openbrewerydb.org/"

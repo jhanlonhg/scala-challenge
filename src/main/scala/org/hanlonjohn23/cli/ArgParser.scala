@@ -1,4 +1,4 @@
-package org.hanlonjohn23
+package org.hanlonjohn23.cli
 
 import scopt.OptionParser
 

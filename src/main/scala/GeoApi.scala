@@ -13,14 +13,14 @@ class GeoApi extends Api[Coordinates] {
 
   implicit val coordinateDecoder: Decoder[Coordinates] = CoordinatesHelper.coordinateDecoder
 
-  private implicit class GeoApiAddress(address: Address) {
+  protected implicit class GeoApiAddress(address: Address) {
 
     def deriveStreetAddress: String = {
       s"${address.removeSubAddress().street} ${address.city}, ${address.state}"
     }
 
-    private def removeSubAddress(): Address = {
-      address.copy(street = address.street.replaceAll(AddressDefaults.SUBADDRESS_REGEX, ""))
+    def removeSubAddress(): Address = {
+      address.copy(street = address.street.replaceAll(GeoApiDefaults.SUBADDRESS_REGEX, ""))
     }
   }
 

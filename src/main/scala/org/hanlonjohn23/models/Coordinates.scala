@@ -8,8 +8,8 @@ case class Coordinates(
                         longitude: Double
                       )
 
-object CoordinatesHelper {
-  val coordinateDecoder: Decoder[Coordinates] = new Decoder[Coordinates] {
+object Coordinates {
+  implicit val coordinateDecoder: Decoder[Coordinates] = new Decoder[Coordinates] {
     final def apply(c: HCursor): Result[Coordinates] = {
       for {
         latitude <- c.downField("latt").as[Double]

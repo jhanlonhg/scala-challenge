@@ -1,8 +1,8 @@
 package org.hanlonjohn23
 
+import org.hanlonjohn23.apis.{BrewApi, GeoApi}
 import org.hanlonjohn23.cli.ArgParser.{Arguments, parser}
-import org.hanlonjohn23.models.BreweryHelper.{UnResolvedBrewery, getClosestBreweries}
-import org.hanlonjohn23.apis.BrewApi
+import org.hanlonjohn23.controllers.BreweryController
 import org.hanlonjohn23.models.{Brewery, ResolvedBrewery}
 
 object Main extends App {
@@ -10,11 +10,11 @@ object Main extends App {
     // Get breweries located in city
     val breweries: Seq[Brewery] = new BrewApi().findBreweriesIn(arguments.city)
 
-    // Get coordinates for breweries without coordinates
-    val resolvedBreweries: Seq[ResolvedBrewery] = breweries.filter(_.isResolvable).map(_.toResolvedBrewery)
+    // Clean raw Brewery models into ResolvedBrewery models
+    val resolvedBreweries: Seq[ResolvedBrewery] = breweries.flatMap(BreweryController.resolveBrewery(_, new GeoApi().getCoordinatesFor))
 
     // Calculate which two breweries are geographically closest
-    val closestBreweries: (ResolvedBrewery, ResolvedBrewery) = getClosestBreweries(resolvedBreweries)
+    val closestBreweries: (ResolvedBrewery, ResolvedBrewery) = BreweryController.getClosestBreweries(resolvedBreweries)
 
     val (brewery1, brewery2) = closestBreweries
 

@@ -1,9 +1,7 @@
 package org.hanlonjohn23.apis
 
-import io.circe.Decoder
-import org.hanlonjohn23.models.{Address, Coordinates, CoordinatesHelper}
-import org.hanlonjohn23.http.ScalaJHttpRequester
 import org.hanlonjohn23.http.{HttpRequester, ScalaJHttpRequester}
+import org.hanlonjohn23.models.{Address, Coordinates}
 
 object GeoApiDefaults {
   val GEOCODER_URL = "https://geocoder.ca"
@@ -11,13 +9,11 @@ object GeoApiDefaults {
   val SUBADDRESS_REGEX: String = " (Ste|Apt|Unit) [a-zA-Z0-9]{1,4}"
 }
 
-class GeoApi extends Api[Coordinates] {
-  override val httpRequester: HttpRequester = new ScalaJHttpRequester(GeoApiDefaults.GEOCODER_URL)
-
-  implicit val coordinateDecoder: Decoder[Coordinates] = CoordinatesHelper.coordinateDecoder
+class GeoApi(
+              override val httpRequester: HttpRequester = new ScalaJHttpRequester(GeoApiDefaults.GEOCODER_URL)
+            ) extends Api[Coordinates] {
 
   protected implicit class GeoApiAddress(address: Address) {
-
     def deriveStreetAddress: String = {
       s"${address.removeSubAddress().street} ${address.city}, ${address.state}"
     }

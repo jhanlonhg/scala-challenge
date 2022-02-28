@@ -1,19 +1,15 @@
 package org.hanlonjohn23.apis
 
-import io.circe.Decoder
-import org.hanlonjohn23._
 import org.hanlonjohn23.http.{HttpRequester, ScalaJHttpRequester}
-import org.hanlonjohn23.models.{Brewery, BreweryHelper, Coordinates, CoordinatesHelper}
+import org.hanlonjohn23.models.Brewery
 
-object BrewApiDefaults {
+object Defaults {
   val OPEN_BREWERY_URL = "https://api.openbrewerydb.org/"
 }
 
-class BrewApi extends Api[Brewery] {
-  override def httpRequester: HttpRequester = new ScalaJHttpRequester(s"${BrewApiDefaults.OPEN_BREWERY_URL}/breweries")
-
-  implicit val coordinateDecoder: Decoder[Coordinates] = CoordinatesHelper.coordinateDecoder
-  implicit val breweryDecoder: Decoder[Brewery] = BreweryHelper.breweryDecoder
+class BrewApi(
+               override val httpRequester: HttpRequester = new ScalaJHttpRequester(s"${Defaults.OPEN_BREWERY_URL}/breweries")
+             ) extends Api[Brewery] {
 
   def findBreweriesIn(city: String): Seq[Brewery] = {
     val params: Seq[(String, String)] = Seq(

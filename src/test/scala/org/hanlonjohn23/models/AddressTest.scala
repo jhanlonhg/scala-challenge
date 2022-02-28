@@ -10,19 +10,19 @@ class AddressTest extends AnyFunSuite {
   val addressWithApt: Address = Address(street = "1 N Calle Cesar Chavez Apt A23B", city = "Santa Barbara", state = "CA")
   val streetAddress: String = "1 N Calle Cesar Chavez Santa Barbara, CA"
 
-//  test("An address object with no sub-address should serialize to itself") {
-//    assert(cleanAddress.getStreetAddress == streetAddress)
-//  }
-//
-//  test("An address object with a suite sub-address should serialize without the suite") {
-//    assert(addressWithSuite.getStreetAddress == streetAddress)
-//  }
-//
-//  test("An address object with a unit sub-address should serialize without the unit") {
-//    assert(addressWithUnit.getStreetAddress == streetAddress)
-//  }
-//
-//  test("An address object with an apartment sub-address should serialize without the apartment") {
-//    assert(addressWithApt.getStreetAddress == streetAddress)
-//  }
+  //  test("An address object with no sub-address should serialize to itself") {
+  //    assert(cleanAddress.getStreetAddress == streetAddress)
+  //  }
+  //
+  //  test("An address object with a suite sub-address should serialize without the suite") {
+  //    assert(addressWithSuite.getStreetAddress == streetAddress)
+  //  }
+  //
+  //  test("An address object with a unit sub-address should serialize without the unit") {
+  //    assert(addressWithUnit.getStreetAddress == streetAddress)
+  //  }
+  //
+  //  test("An address object with an apartment sub-address should serialize without the apartment") {
+  //    assert(addressWithApt.getStreetAddress == streetAddress)
+  //  }
 }

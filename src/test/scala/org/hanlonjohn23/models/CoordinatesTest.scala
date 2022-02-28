@@ -23,7 +23,7 @@ class CoordinatesTest extends AnyFunSuite {
       |""".stripMargin
 
   test("A response from Geocoder can be converted into a Coordinates object") {
-    implicit val locationDecoder: Decoder[Coordinates] = CoordinatesHelper.coordinateDecoder
+    implicit val locationDecoder: Decoder[Coordinates] = Coordinates.coordinateDecoder
 
     val location = Coordinates(
       latitude = 34.040462, longitude = -118.303441

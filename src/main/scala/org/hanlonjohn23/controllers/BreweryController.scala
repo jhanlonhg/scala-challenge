@@ -1,6 +1,5 @@
 package org.hanlonjohn23.controllers
 
-import org.hanlonjohn23.apis.GeoApi
 import org.hanlonjohn23.distanceUtils.LeastDistanceCalculator.{generateDistance, generateDistinctPairs}
 import org.hanlonjohn23.distanceUtils.{DistanceGenerator, Haversine}
 import org.hanlonjohn23.models.{Address, Brewery, Coordinates, ResolvedBrewery}
@@ -14,7 +13,7 @@ object BreweryController {
             brewery.name,
             coordinates
           ))
-        case Brewery(_, Some(address), None)  =>
+        case Brewery(_, Some(address), None) =>
           Some(ResolvedBrewery(
             brewery.name,
             f(address)

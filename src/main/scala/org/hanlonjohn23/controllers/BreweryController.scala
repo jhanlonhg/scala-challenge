@@ -5,7 +5,7 @@ import org.hanlonjohn23.distanceUtils.{DistanceGenerator, Haversine}
 import org.hanlonjohn23.models.{Address, Brewery, Coordinates, ResolvedBrewery}
 
 object BreweryController {
-  implicit class UnResolvedBrewery(brewery: Brewery) {
+  private implicit class UnResolvedBrewery(brewery: Brewery) {
     def resolve(f: Address => Coordinates): Option[ResolvedBrewery] = {
       brewery match {
         case Brewery(_, _, Some(coordinates)) =>

@@ -6,7 +6,7 @@ import org.hanlonjohn23.models.{Address, Coordinates}
 object GeoApiDefaults {
   val GEOCODER_URL = "https://geocoder.ca"
   val GEOCODER_AUTH: String = sys.env("GEOCODER_AUTH")
-  val SUBADDRESS_REGEX: String = " (Ste|Apt|Unit) [a-zA-Z0-9]{1,4}"
+  val SUBADDRESS_REGEX: String = " (Ste|Apt|Unit) [a-zA-Z0-9]{1,4}$"
 }
 
 class GeoApi(

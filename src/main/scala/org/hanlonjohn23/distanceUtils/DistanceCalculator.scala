@@ -24,12 +24,4 @@ object LeastDistanceCalculator {
   def generateDistance(locationPair: (Coordinates, Coordinates))(implicit distanceGenerator: DistanceGenerator): Double = {
     distanceGenerator.generateDistance(locationPair)
   }
-
-  private def getMinDistance(distance1: Double, distance2: Double): Double = {
-    if (distance1 < distance2) {
-      distance1
-    } else {
-      distance2
-    }
-  }
 }

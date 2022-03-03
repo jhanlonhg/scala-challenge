@@ -11,7 +11,9 @@ object Main extends App {
     val breweries: Seq[Brewery] = new BrewApi().findBreweriesIn(arguments.city)
 
     // Clean raw Brewery models into ResolvedBrewery models
-    val resolvedBreweries: Seq[ResolvedBrewery] = breweries.flatMap(BreweryController.resolveBrewery(_, new GeoApi().getCoordinatesFor))
+    val geoApi = new GeoApi()
+    val tryResolveBrewery  = BreweryController.resolveBrewery(_, geoApi.getCoordinatesFor)
+    val resolvedBreweries: Seq[ResolvedBrewery] = breweries.flatMap(tryResolveBrewery)
 
     // Calculate which two breweries are geographically closest
     val closestBreweries: (ResolvedBrewery, ResolvedBrewery) = BreweryController.getClosestBreweries(resolvedBreweries)

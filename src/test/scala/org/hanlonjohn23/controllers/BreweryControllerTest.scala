@@ -15,9 +15,12 @@ class BreweryControllerTest extends AnyFunSuite {
 
   val resolvedBrewery: ResolvedBrewery = ResolvedBrewery(name = "FooBar", coordinates = Coordinates(34.418813, -119.683188))
 
-  def addressToCoordinates(address: Address): Coordinates = {
-    Coordinates(34.418813, -119.683188)
-  }
+  def addressToCoordinates(address: Address): Coordinates = { Coordinates(34.418813, -119.683188) }
+
+  val closeResolvedBrewery: ResolvedBrewery = ResolvedBrewery("The Baz Room", Coordinates(34.422092488906934, -119.70343894243503))
+  val farResolvedBrewery: ResolvedBrewery = ResolvedBrewery("The O.G.", Coordinates(34.43170562812181, -119.84449914963267))
+
+  val resolvedBreweries: Seq[ResolvedBrewery] = Seq(resolvedBrewery, closeResolvedBrewery, farResolvedBrewery)
 
   test("A brewery with all properties will resolve to a ResolvedBrewery") {
     assert(BreweryController.resolveBrewery(goodBrewery, addressToCoordinates).contains(resolvedBrewery))
@@ -33,5 +36,9 @@ class BreweryControllerTest extends AnyFunSuite {
 
   test("A brewery without coordinates or address will not resolve") {
     assert(BreweryController.resolveBrewery(badBrewery, addressToCoordinates).isEmpty)
+  }
+
+  test("getClosestBreweries should return a tuple containing the two closest breweries from a collection of ResolvedBreweries") {
+    assert(BreweryController.getClosestBreweries(resolvedBreweries) == (resolvedBrewery, closeResolvedBrewery))
   }
 }

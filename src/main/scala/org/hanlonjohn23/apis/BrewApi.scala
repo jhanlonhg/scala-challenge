@@ -3,12 +3,12 @@ package org.hanlonjohn23.apis
 import org.hanlonjohn23.http.{HttpRequester, ScalaJHttpRequester}
 import org.hanlonjohn23.models.Brewery
 
-object Defaults {
+object BrewApiDefaults {
   val OPEN_BREWERY_URL = "https://api.openbrewerydb.org/"
 }
 
 class BrewApi(
-               override val httpRequester: HttpRequester = new ScalaJHttpRequester(s"${Defaults.OPEN_BREWERY_URL}/breweries")
+               override val httpRequester: HttpRequester = new ScalaJHttpRequester(s"${BrewApiDefaults.OPEN_BREWERY_URL}/breweries")
              ) extends Api[Brewery] {
 
   def findBreweriesIn(city: String): Seq[Brewery] = {

@@ -5,7 +5,6 @@ ThisBuild / scalaVersion := "2.13.8"
 lazy val root = (project in file("."))
   .settings(
     name := "scala-challenge",
-    idePackagePrefix := Some("org.hanlonjohn23"),
     assembly / assemblyJarName := "q02.jar"
   )
 
